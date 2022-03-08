@@ -34,8 +34,6 @@
 #define PREFIX_STRING_SIZE 16
 #define PREFIX_STRING "Progress: [%3d%%]%.*s%*c"
 
-// const char _blockString[] = "##################################################";
-
 typedef struct ProgressBar {
     float total;
     float curr;
@@ -56,15 +54,13 @@ void PB_Init(int total, ProgressBar* pb)
     ProgressBar* pbar = (ProgressBar*)malloc(sizeof(ProgressBar));
     pbar->total = total;
     pbar->curr = 0;
-    // sprintf(pbar->progressString, "Progress: [%3d%%]", (int)0);
     // Get the terminal size
     struct winsize w;
     ioctl(STDOUT_FILENO, TIOCGWINSZ, &w);
     pbar->rows = w.ws_row;
     pbar->columns = w.ws_col;
-    // Set blockLength as columns - ( 16 + COLUMN_MARGIN ).
-    // 16 for the Progress: [xxx%] part
-    int blockLen = pbar->columns - (16 + COLUMN_MARGIN);
+    // Set blockLength as columns - ( PREFIX_STRING_SIZE + COLUMN_MARGIN )
+    int blockLen = pbar->columns - (PREFIX_STRING_SIZE + COLUMN_MARGIN);
     pbar->blockLen = blockLen;
     pbar->blockString = (char*)calloc(blockLen, sizeof(char));
     char bl = '#';
@@ -75,7 +71,7 @@ void PB_Init(int total, ProgressBar* pb)
     pbar->progressString = (char*)calloc(blockLen + PREFIX_STRING_SIZE + 1, sizeof(char));
     memcpy(pb, pbar, sizeof(ProgressBar));
 
-    // Now, we need to ensure that the last line is available
+    // Ensure that the last line is available
     printf("\n\0337\033[0;%dr\0338\033[1A", pbar->rows - 1);
     fflush(stdout);
     // Print Breakdown
