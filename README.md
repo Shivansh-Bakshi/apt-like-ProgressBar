@@ -46,3 +46,6 @@ int main(int argc, char const *argv[])
     return 0;
 }
 ```
+
+## Working Output
+![working gif](./working.gif)
