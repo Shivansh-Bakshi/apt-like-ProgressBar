@@ -1,5 +1,5 @@
 # apt-like-ProgressBar
-A simple header only Progress Bar, implemented to be similar to that during apt upgrade process, with the progressbar showing at the bottom, allowing further print statements to continue at the top.
+A simple header only Progress Bar for C, implemented to be similar to that during apt upgrade process, with the progressbar showing at the bottom, allowing further print statements to continue at the top.
 
 Allows the creation and usage of simple progress bars for generic C codes. The updation of progress is to be done manually, thereby allowing usage across all sorts of looping constructs
 
