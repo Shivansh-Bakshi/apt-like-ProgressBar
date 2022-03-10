@@ -3,23 +3,6 @@
  * Allows the creation and usage of simple progress bars for generic C codes
  * The updation of progress is requred to be done manually, thereby allowing
  * usage across all sorts of looping constructs
- * Usage:
- *      Before the start of the loop, create a ProgressBar object and set it up 
- *      with the total value as the number of times the loop is iterated.
- *      Update the ProgressBar at the start of the loop.
- *      Clear the ProgressBar once done with the loop.
- *      Now, the ProgressBar object is also reset.
- * 
- * Example:
- *      int total = 100;
- *      ProgressBar pb;
- *      PB_Init(total, &pb);
- *      for (int i = 0; i < total; i++) {
- *          PB_Update(i + 1, &pb);
- *          sleep(1);
- *          printf("Iteration %d finished\n", i + 1);
- *      }
- *      PB_Clear(&pb);
  * 
  * Written By: Shivansh Bakshi
  */
@@ -40,7 +23,7 @@ typedef struct ProgressBar {
     // Terminal Dimensions
     unsigned short rows;
     unsigned short columns;
-    // ProgressBar stirng parameters
+    // ProgressBar string parameters
     //          The string itself: Length = 16 + len (15 from "Progress: [xxx%]")
     //          How many block characters it can have
     //          The block string to fill the progress bar
@@ -59,7 +42,7 @@ void PB_Init(int total, ProgressBar* pb)
     ioctl(STDOUT_FILENO, TIOCGWINSZ, &w);
     pbar->rows = w.ws_row;
     pbar->columns = w.ws_col;
-    // Set blockLength as columns - ( PREFIX_STRING_SIZE + COLUMN_MARGIN )
+    
     int blockLen = pbar->columns - (PREFIX_STRING_SIZE + COLUMN_MARGIN);
     pbar->blockLen = blockLen;
     pbar->blockString = (char*)calloc(blockLen, sizeof(char));
