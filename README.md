@@ -38,7 +38,7 @@ int main(int argc, char const *argv[])
 
     PB_Init(total, &pb);
     for (int i = 0; i < 100; i++) {
-        printf("Iteration: %d / total\n");
+        printf("Iteration %d / total\n", i + 1);
         sleep(1);
         PB_Update(i + 1, &pb);
     }
